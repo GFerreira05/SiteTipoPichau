@@ -1,7 +1,6 @@
 CREATE DATABASE Tipo_Pichau;
 USE Tipo_Pichau;
 
--- Tabela de Usuários
 CREATE TABLE Usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
@@ -13,7 +12,6 @@ CREATE TABLE Usuarios (
     data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- Tabela de Permissões de Administrador
 CREATE TABLE Permissoes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     admin_id INT NOT NULL,
@@ -22,23 +20,12 @@ CREATE TABLE Permissoes (
     FOREIGN KEY (admin_id) REFERENCES Usuarios(id)
 );
 
--- Tabela de Logs de Atividades de Administradores
-CREATE TABLE Logs (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    admin_id INT NOT NULL,
-    acao VARCHAR(255) NOT NULL,
-    data_acao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (admin_id) REFERENCES Usuarios(id)
-);
-
--- Tabela de Categorias de Produtos
 CREATE TABLE Categorias (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     descricao TEXT
 );
 
--- Tabela de Produtos
 CREATE TABLE Produtos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
@@ -52,25 +39,6 @@ CREATE TABLE Produtos (
     FOREIGN KEY (categoria_id) REFERENCES Categorias(id)
 );
 
--- Tabela de Carrinho de Compras
-CREATE TABLE Carrinho (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id INT NOT NULL,
-    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (usuario_id) REFERENCES Usuarios(id)
-);
-
--- Tabela de Itens do Carrinho
-CREATE TABLE Itens_do_Carrinho (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    carrinho_id INT NOT NULL,
-    produto_id INT NOT NULL,
-    quantidade INT NOT NULL,
-    FOREIGN KEY (carrinho_id) REFERENCES Carrinho(id),
-    FOREIGN KEY (produto_id) REFERENCES Produtos(id)
-);
-
--- Tabela de Pedidos
 CREATE TABLE Pedidos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id INT NOT NULL,
@@ -80,7 +48,6 @@ CREATE TABLE Pedidos (
     FOREIGN KEY (usuario_id) REFERENCES Usuarios(id)
 );
 
--- Tabela de Itens do Pedido
 CREATE TABLE Itens_do_Pedido (
     id INT AUTO_INCREMENT PRIMARY KEY,
     pedido_id INT NOT NULL,
@@ -91,7 +58,6 @@ CREATE TABLE Itens_do_Pedido (
     FOREIGN KEY (produto_id) REFERENCES Produtos(id) 
 );
 
--- Tabela de Pagamentos
 CREATE TABLE Pagamentos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     pedido_id INT NOT NULL,
@@ -102,19 +68,6 @@ CREATE TABLE Pagamentos (
     FOREIGN KEY (pedido_id) REFERENCES Pedidos(id)
 );
 
--- Tabela de Comentários e Avaliações de Produtos
-CREATE TABLE Avaliacoes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id INT NOT NULL,
-    produto_id INT NOT NULL,
-    avaliacao INT NOT NULL CHECK(avaliacao >= 1 AND avaliacao <= 5),
-    comentario TEXT,
-    data_avaliacao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (usuario_id) REFERENCES Usuarios(id),
-    FOREIGN KEY (produto_id) REFERENCES Produtos(id)
-);
-
--- Tabela de Endereços de Entrega
 CREATE TABLE Enderecos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id INT NOT NULL,
