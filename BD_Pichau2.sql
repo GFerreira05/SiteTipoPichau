@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 27/08/2024 às 22:02
+-- Tempo de geração: 03/09/2024 às 20:59
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -20,33 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `tipo_pichau`
 --
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `avaliacoes`
---
-
-CREATE TABLE `avaliacoes` (
-  `id` int(11) NOT NULL,
-  `usuario_id` int(11) NOT NULL,
-  `produto_id` int(11) NOT NULL,
-  `avaliacao` int(11) NOT NULL CHECK (`avaliacao` >= 1 and `avaliacao` <= 5),
-  `comentario` text DEFAULT NULL,
-  `data_avaliacao` datetime DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `carrinho`
---
-
-CREATE TABLE `carrinho` (
-  `id` int(11) NOT NULL,
-  `usuario_id` int(11) NOT NULL,
-  `data_criacao` datetime DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -79,19 +52,6 @@ CREATE TABLE `enderecos` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `itens_do_carrinho`
---
-
-CREATE TABLE `itens_do_carrinho` (
-  `id` int(11) NOT NULL,
-  `carrinho_id` int(11) NOT NULL,
-  `produto_id` int(11) NOT NULL,
-  `quantidade` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Estrutura para tabela `itens_do_pedido`
 --
 
@@ -101,19 +61,6 @@ CREATE TABLE `itens_do_pedido` (
   `produto_id` int(11) NOT NULL,
   `quantidade` int(11) NOT NULL,
   `preco_unitario` decimal(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `logs`
---
-
-CREATE TABLE `logs` (
-  `id` int(11) NOT NULL,
-  `admin_id` int(11) NOT NULL,
-  `acao` varchar(255) NOT NULL,
-  `data_acao` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -198,21 +145,6 @@ CREATE TABLE `usuarios` (
 --
 
 --
--- Índices de tabela `avaliacoes`
---
-ALTER TABLE `avaliacoes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `usuario_id` (`usuario_id`),
-  ADD KEY `produto_id` (`produto_id`);
-
---
--- Índices de tabela `carrinho`
---
-ALTER TABLE `carrinho`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `usuario_id` (`usuario_id`);
-
---
 -- Índices de tabela `categorias`
 --
 ALTER TABLE `categorias`
@@ -226,27 +158,12 @@ ALTER TABLE `enderecos`
   ADD KEY `usuario_id` (`usuario_id`);
 
 --
--- Índices de tabela `itens_do_carrinho`
---
-ALTER TABLE `itens_do_carrinho`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `carrinho_id` (`carrinho_id`),
-  ADD KEY `produto_id` (`produto_id`);
-
---
 -- Índices de tabela `itens_do_pedido`
 --
 ALTER TABLE `itens_do_pedido`
   ADD PRIMARY KEY (`id`),
   ADD KEY `pedido_id` (`pedido_id`),
   ADD KEY `produto_id` (`produto_id`);
-
---
--- Índices de tabela `logs`
---
-ALTER TABLE `logs`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `admin_id` (`admin_id`);
 
 --
 -- Índices de tabela `pagamentos`
@@ -288,18 +205,6 @@ ALTER TABLE `usuarios`
 --
 
 --
--- AUTO_INCREMENT de tabela `avaliacoes`
---
-ALTER TABLE `avaliacoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `carrinho`
---
-ALTER TABLE `carrinho`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de tabela `categorias`
 --
 ALTER TABLE `categorias`
@@ -312,21 +217,9 @@ ALTER TABLE `enderecos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de tabela `itens_do_carrinho`
---
-ALTER TABLE `itens_do_carrinho`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de tabela `itens_do_pedido`
 --
 ALTER TABLE `itens_do_pedido`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `logs`
---
-ALTER TABLE `logs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -364,30 +257,10 @@ ALTER TABLE `usuarios`
 --
 
 --
--- Restrições para tabelas `avaliacoes`
---
-ALTER TABLE `avaliacoes`
-  ADD CONSTRAINT `avaliacoes_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
-  ADD CONSTRAINT `avaliacoes_ibfk_2` FOREIGN KEY (`produto_id`) REFERENCES `produtos` (`id`);
-
---
--- Restrições para tabelas `carrinho`
---
-ALTER TABLE `carrinho`
-  ADD CONSTRAINT `carrinho_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
-
---
 -- Restrições para tabelas `enderecos`
 --
 ALTER TABLE `enderecos`
   ADD CONSTRAINT `enderecos_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
-
---
--- Restrições para tabelas `itens_do_carrinho`
---
-ALTER TABLE `itens_do_carrinho`
-  ADD CONSTRAINT `itens_do_carrinho_ibfk_1` FOREIGN KEY (`carrinho_id`) REFERENCES `carrinho` (`id`),
-  ADD CONSTRAINT `itens_do_carrinho_ibfk_2` FOREIGN KEY (`produto_id`) REFERENCES `produtos` (`id`);
 
 --
 -- Restrições para tabelas `itens_do_pedido`
@@ -395,12 +268,6 @@ ALTER TABLE `itens_do_carrinho`
 ALTER TABLE `itens_do_pedido`
   ADD CONSTRAINT `itens_do_pedido_ibfk_1` FOREIGN KEY (`pedido_id`) REFERENCES `pedidos` (`id`),
   ADD CONSTRAINT `itens_do_pedido_ibfk_2` FOREIGN KEY (`produto_id`) REFERENCES `produtos` (`id`);
-
---
--- Restrições para tabelas `logs`
---
-ALTER TABLE `logs`
-  ADD CONSTRAINT `logs_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `usuarios` (`id`);
 
 --
 -- Restrições para tabelas `pagamentos`
