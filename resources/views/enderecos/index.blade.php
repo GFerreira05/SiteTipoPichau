@@ -5,35 +5,40 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 
 
+
 <main class="h-full overflow-y-auto">
-    <div class="container px-6 mx-auto grid"> 
+    <div class="container px-6 mx-auto grid">
         <div class="container px-6 mt-auto mb-auto grid">
             <div class="mt-8">
 
                 <!-- New Table -->
                 <div class="w-full overflow-hidden rounded-lg shadow-xs">
                     <div class="w-full overflow-x-auto">
-                        <table class="w-full whitespace-no-wrap">
+                        <table class="w-full whitespace-no-wrap" id="datatablesSimple">
                             <thead>
                                 <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                                     <th class="px-4 py-3">ID</th>
-                                    <th class="px-4 py-3">NOME</th>
-                                    <th class="px-4 py-3">DESCRIÇÃO</th>
-                                    <th class="px-4 py-3">STATUS</th>
+                                    <th class="px-4 py-3">LOCAL</th>
+                                    <th class="px-4 py-3">CIDADES</th>
+                                    <th class="px-4 py-3">ESTADOS</th>
+                                    <th class="px-4 py-3">PAIS</th>
+                                    <th class="px-4 py-3">USUÁRIOS</th>
                                     <th class="px-4 py-3">OPÇÕES</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800" id="categoryTableBody">
-                                @foreach ($categorias as $linha)
-                               
+                                @foreach ($enderecos as $linha)
+
                                 <tr class="text-gray-700 dark:text-gray-400">
                                     <td class="px-4 py-3">{{ $linha["id"] }}</td>
-                                    <td class="px-4 py-3">{{ $linha["cat_nome"] }}</td>
-                                    <td class="px-4 py-3">{{ $linha["cat_descricao"] }}</td>
-                                    <td class="px-4 py-3">{{ $linha["cat_ativo"] ? 'Ativo' : 'Inativo' }}</td>
+                                    <td class="px-4 py-3">{{ $linha["local"] ? $linha["local"] : 'casa, prédio, condomínio' }}
+                                    <td class="px-4 py-3">{{ $linha["cidade"] }}</td>
+                                    <td class="px-4 py-3">{{ $linha["estado"] }}</td>
+                                    <td class="px-4 py-3">{{ $linha["pais"] }}</td>
+                                    <td class="px-4 py-3">{{ $linha["usuario"] }}</td>
                                     <td class="px-4 py-3">
-                                        <a href="/categoria/update/{{$linha['id']}}" class="btn btn-success"><li class="fa fa-edit"></li></a>
-                                        <a href="/categoria/excluir/{{$linha['id']}}" class="btn btn-danger"><li class="fa fa-trash"></li></a>
+                                        <a href="/enderecos/update/{{$linha['id']}}" class="btn btn-success"><li class="fa fa-edit"></li></a>
+                                        <a href="/enderecos/excluir/{{$linha['id']}}" class="btn btn-danger"><li class="fa fa-trash"></li></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -41,8 +46,8 @@
                         </table>
                     </div>
                 </div>
-            <a href="/categoria/novo" class="btn btn-primary">Novo</a>
-                
+            <a href="/enderecos/novo" class="btn btn-primary">Novo</a>
+
 </main>
 
 @endsection
