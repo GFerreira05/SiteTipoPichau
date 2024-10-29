@@ -9,4 +9,11 @@ class Estados extends Model
 {
     use HasFactory;
     protected $table = "estados";
+
+    // Modelo Estados.php
+    public function pais() 
+    {
+        return $this->belongsTo(Paises::class, 'paises_id');
+    }
+
 }

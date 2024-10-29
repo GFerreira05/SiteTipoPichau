@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('nome', 100);
             $table->string('email', 100);
             $table->string('senha', 255);
-            $table->string('telefone', 20);
+            $table->string('telefone', 10);
             $table->enum('tipo_usuario', ['comum', 'admin']);
             $table->timestamp("data_criacao")->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamps();

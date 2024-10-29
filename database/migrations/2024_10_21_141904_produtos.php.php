@@ -7,17 +7,15 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     public function up()
-    { 
+    {
         Schema::create('produtos', function (Blueprint $table) {
             $table->id();
-            $table->string("prod_nome");
+            $table->string("nome");
             $table->foreignId('cat_id')->constrained('categoria')->onDelete('cascade');
-            $table->decimal("prod_preco", 8, 2);
-            $table->integer("prod_estoque");
-            $table->string("prod_fabricante");
-            $table->timestamp("prod_adicionado")->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->string("prod_descricao")->nullable();
-            $table->boolean("prod_ativo")->default(1);
+            $table->decimal("preco", 8, 2);
+            $table->integer("estoque");
+            $table->string("fabricante");
+            $table->string("descricao")->nullable();
             $table->timestamps();
         });
     }

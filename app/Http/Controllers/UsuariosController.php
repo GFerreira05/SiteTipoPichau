@@ -8,9 +8,9 @@ use App\Models\Usuarios;
 class UsuariosController extends Controller
 {
     public function index(){
-        
-        $dados = Usuarios::all()->toArray();  //select de categorias - laravel    
-        
+
+        $dados = Usuarios::all()->toArray();  //select de categorias - laravel
+
         return View("usuarios.index",
         [
             'usuarios' => $dados
@@ -23,26 +23,26 @@ class UsuariosController extends Controller
 
     public function salvar_novo(Request $request){
         $usuarios = new Usuarios;
-        $usuarios->nome = $request->nome;
-        $usuarios->email = $request->email;
-        $usuarios->senha = $request->senha; 
-        $usuarios->telefone = $request->telefone; 
-        $usuarios->tipo_usuario = $request->tipo_usuario;
+        $usuarios->nome = $request->input("nome");
+        $usuarios->email = $request->input("email");
+        $usuarios->senha = $request->input("senha");
+        $usuarios->telefone = $request->input("telefone");
+        $usuarios->tipo_usuario = $request->input("tipo_usuario");
         $usuarios->save();
-        return redirect("/usuarios");                  
+        return redirect("/usuarios");
         exit;
     }
 
     public function excluir($id){
         $usuarios = Usuarios::find($id);
         $usuarios->delete();
-        return redirect("/usuarios");        
+        return redirect("/usuarios");
     }
-    
+
     public function alterar($id){
         $usuarios = Usuarios::find($id)->toArray();
         return View("usuarios.formulario",['usuarios'=>$usuarios]);
-        var_dump($usuarios);          
+        var_dump($usuarios);
     }
 
     public function salvar_update(Request $request){
@@ -50,10 +50,10 @@ class UsuariosController extends Controller
         $usuarios = Usuarios::find($id);
         $usuarios->nome = $request->input("nome");
         $usuarios->email = $request->input("email");
-        $usuarios->senha = $request->input("senha"); 
-        $usuarios->telefone = $request->input("telefone"); 
+        $usuarios->senha = $request->input("senha");
+        $usuarios->telefone = $request->input("telefone");
         $usuarios->tipo_usuario = $request->input("tipo_usuario");
         $usuarios->save();
-        return redirect("/usuarios");        
+        return redirect("/usuarios");
     }
 }

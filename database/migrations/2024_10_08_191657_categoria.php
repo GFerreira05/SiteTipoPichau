@@ -10,12 +10,12 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up()
-    { 
+    {
         Schema::create('categoria', function (Blueprint $table) {
             $table->id(); //Inteiro AutoIncremento PK => id
-            $table->string("cat_nome");
-            $table->string("cat_descricao")->nullable();
-            $table->boolean("cat_ativo")->default(1);
+            $table->string("nome");
+            $table->string("descricao");
+            $table->boolean("status")->default(1);
             $table->timestamps();
         });
     }

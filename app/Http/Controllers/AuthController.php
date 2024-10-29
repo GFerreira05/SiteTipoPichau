@@ -29,7 +29,7 @@ class AuthController extends Controller
         Session::put('email', $user->email);
         Session::put("type_user", $user->type_user);
   
-        return redirect()->route('home');
+        return redirect()->route('tabela_categoria');
     }
 
     public function logoutUser(Request $request) {
